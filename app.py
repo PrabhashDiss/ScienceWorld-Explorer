@@ -1,4 +1,5 @@
 import gradio as gr
+from fastapi import FastAPI
 import json
 
 # Generate Markdown history from JSON history
@@ -243,5 +244,8 @@ with gr.Blocks() as demo:
 
     submit_button.click(process_json_history, json_file, history_output)
 
-# Launch the Gradio interface
-demo.launch()
+# Create FastAPI app
+app = FastAPI()
+
+# Mount Gradio app
+app = gr.mount_gradio_app(app, demo, path="/")
